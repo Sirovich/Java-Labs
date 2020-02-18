@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="157.0" maxWidth="517.0" minHeight="157.0" minWidth="-Infinity" prefHeight="157.0" prefWidth="517.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainController">
+   <children>
+      <Label layoutX="33.0" layoutY="22.0" prefHeight="21.0" prefWidth="91.0" text="Масса раствора" />
+      <Label layoutX="33.0" layoutY="70.0" prefHeight="17.0" text="Процентное содержание" />
+      <Label layoutX="33.0" layoutY="117.0" text="Масса сухого вещества" />
+      <TextField fx:id="soluteMassField" layoutX="135.0" layoutY="20.0" prefHeight="25.0" prefWidth="156.0" />
+      <TextField fx:id="percentField" layoutX="189.0" layoutY="66.0" prefHeight="25.0" prefWidth="102.0" />
+      <TextField fx:id="dryMatterMassField" layoutX="173.0" layoutY="113.0" prefHeight="25.0" prefWidth="118.0" />
+      <Button fx:id="soluteMassButton" layoutX="320.0" layoutY="20.0" mnemonicParsing="false" onAction="#calculateSoluteMass" prefHeight="25.0" text="Узнать массу раствора" />
+      <Button fx:id="dryMassButton" layoutX="320.0" layoutY="66.0" mnemonicParsing="false" onAction="#calculateDryMass" text="Узнать массу сухого вещества" />
+      <Label fx:id="warningField" layoutX="320.0" layoutY="113.0" prefHeight="21.0" textFill="RED" />
+   </children>
+</AnchorPane>
