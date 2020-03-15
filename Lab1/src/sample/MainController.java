@@ -1,14 +1,11 @@
 package sample;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import sample.Logic.IMassLogic;
+import sample.Logic.MassLogic;
 
 public class MainController {
     @FXML
@@ -19,6 +16,12 @@ public class MainController {
     private TextField soluteMassField;
     @FXML
     private Label warningField;
+
+    private IMassLogic massLogic;
+
+    public MainController(){
+        massLogic = new MassLogic();
+    }
 
     @FXML
     public void calculateSoluteMass(ActionEvent event)
@@ -44,7 +47,7 @@ public class MainController {
             return;
         }
 
-        soluteMassField.setText(String.valueOf((dryMass * 100 / percent)));
+        soluteMassField.setText(String.valueOf(massLogic.getSoluteMass(dryMass, percent)));
     }
 
     @FXML
@@ -71,13 +74,10 @@ public class MainController {
             return;
         }
 
-        dryMatterMassField.setText(String.valueOf((soluteMass * percent / 100)));
+        dryMatterMassField.setText(String.valueOf((massLogic.getDryMass(soluteMass, percent))));
     }
 
     private void clearWarnings(){
         warningField.setText("");
     }
-
-
-
 }
