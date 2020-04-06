@@ -3,7 +3,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Poker.Models.Table">
    <children>
       <ImageView fitHeight="466.0" fitWidth="667.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
           <image>
@@ -11,6 +11,13 @@
           </image>
       </ImageView>
       <HBox layoutX="116.0" layoutY="140.0" prefHeight="100.0" prefWidth="436.0" />
-      <HBox fx:id="playerHand" layoutX="234.0" layoutY="325.0" prefHeight="100.0" prefWidth="200.0" />
+      <HBox fx:id="playerHand" layoutX="289.0" layoutY="325.0" prefHeight="100.0" prefWidth="114.0"/>
+      <HBox layoutX="22.0" layoutY="190.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox layoutX="91.0" layoutY="289.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox layoutX="126.0" layoutY="44.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox layoutX="300.0" layoutY="14.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox layoutX="442.0" layoutY="14.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox layoutX="584.0" layoutY="147.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox layoutX="518.0" layoutY="276.0" prefHeight="86.0" prefWidth="69.0" />
    </children>
 </AnchorPane>
