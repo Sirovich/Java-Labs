@@ -2,14 +2,14 @@ package Poker.Models.Players;
 
 import Poker.Models.Cards.Hand;
 
-public class Bot implements IPlayer{
+public class Bot extends Player{
     @Override
     public void setHand(Hand hand) {
 
     }
 
     @Override
-    public boolean isDealer() {
+    public boolean isFold() {
         return false;
     }
 

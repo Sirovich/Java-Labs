@@ -6,9 +6,13 @@ public interface IPlayer {
 
     void setHand(Hand hand);
 
-    boolean isDealer();
+    boolean isFold();
+
+    void setFold();
 
     void makeMove();
+
+    int getMoney();
 
     void placeBet(int betSize);
 }

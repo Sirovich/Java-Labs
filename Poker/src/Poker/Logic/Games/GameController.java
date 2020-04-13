@@ -7,9 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import java.awt.*;
-import java.io.IOException;
 
 public class GameController {
     private Table table;
@@ -25,7 +22,7 @@ public class GameController {
         table.setPlayers(1, playersCount - 1);
         Parent root = FXMLLoader.load(getClass().getResource("/Poker/Main.fxml"));
         stage.setTitle("PokerDocker");
-        stage.setScene(new Scene(root, 630, 400));
+        stage.setScene(new Scene(root, 800, 500));
         stage.show();
     }
 

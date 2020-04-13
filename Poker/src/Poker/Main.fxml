@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Poker.Models.Table">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Poker.Models.Table">
    <children>
-      <ImageView fitHeight="466.0" fitWidth="667.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="466.0" fitWidth="640.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
           <image>
               <Image backgroundLoading="true" url="@../Resources/Images/table.png" />
           </image>
       </ImageView>
       <HBox layoutX="116.0" layoutY="140.0" prefHeight="100.0" prefWidth="436.0" />
-      <HBox fx:id="playerHand" layoutX="289.0" layoutY="325.0" prefHeight="100.0" prefWidth="114.0"/>
+      <HBox fx:id="playerHand" layoutX="270.0" layoutY="325.0" prefHeight="100.0" prefWidth="114.0" />
       <HBox layoutX="22.0" layoutY="190.0" prefHeight="86.0" prefWidth="69.0" />
       <HBox layoutX="91.0" layoutY="289.0" prefHeight="86.0" prefWidth="69.0" />
       <HBox layoutX="126.0" layoutY="44.0" prefHeight="86.0" prefWidth="69.0" />
@@ -19,5 +20,14 @@
       <HBox layoutX="442.0" layoutY="14.0" prefHeight="86.0" prefWidth="69.0" />
       <HBox layoutX="584.0" layoutY="147.0" prefHeight="86.0" prefWidth="69.0" />
       <HBox layoutX="518.0" layoutY="276.0" prefHeight="86.0" prefWidth="69.0" />
+      <AnchorPane layoutX="399.0" layoutY="375.0" prefHeight="119.0" prefWidth="331.0" fx:id="playerBetMenu">
+         <children>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Fold" />
+            <Button layoutX="90.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Call" />
+            <Button layoutX="166.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Bet" />
+            <Slider layoutX="131.0" layoutY="72.0" prefHeight="14.0" prefWidth="166.0" />
+            <TextField layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="88.0" />
+            <Button layoutX="248.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="All in" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>

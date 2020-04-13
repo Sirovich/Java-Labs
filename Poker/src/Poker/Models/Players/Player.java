@@ -4,11 +4,11 @@ import Poker.Models.Cards.Hand;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 
-public class Player implements IPlayer {
-    @FXML
-    private HBox playerHand;
+public class Player{
     private Hand hand;
     private int money;
+    private int bet;
+    private boolean isFold = false;
     private boolean isDealer;
 
     public Player(){
@@ -17,33 +17,32 @@ public class Player implements IPlayer {
         isDealer = false;
     }
 
-    @Override
     public void setHand(Hand hand) {
         this.hand = hand;
     }
 
-    @Override
-    public boolean isDealer() {
-        return isDealer;
+    public boolean isFold() {
+        return this.isFold;
     }
 
-    @Override
+    public void setFold() {
+        isFold = true;
+    }
+
     public void makeMove() {
 
     }
 
-    @Override
+    public int getMoney() {
+        return this.money;
+    }
+
     public void placeBet(int betSize) {
         money -= betSize;
+        bet += betSize;
     }
 
-    public void setDealer(boolean dealer) {
-        isDealer = dealer;
+    public int getBet() {
+        return this.bet;
     }
-
-    public int getMoney() {
-        return money;
-    }
-
-
 }
