@@ -2,7 +2,15 @@ package Poker.Models.Players;
 
 import Poker.Models.Cards.Hand;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.io.Console;
+import java.io.IOException;
 
 public class Player{
     private Hand hand;
@@ -29,9 +37,19 @@ public class Player{
         isFold = true;
     }
 
-    public void makeMove() {
+    public void makeMove(int betSize, int bigBlind) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Poker/Main.fxml"));
+        Parent root = loader.load();
+
+        Button bet = (Button)loader.getNamespace().get("bet");
+        Button fold = (Button)loader.getNamespace().get("fold");
+        Button call = (Button)loader.getNamespace().get("call");
+        Button allIn = (Button)loader.getNamespace().get("allIn");
+
 
     }
+
 
     public int getMoney() {
         return this.money;

@@ -14,7 +14,7 @@ public class Bot extends Player{
     }
 
     @Override
-    public void makeMove() {
+    public void makeMove(int bet, int bigBlind) {
 
     }
 

@@ -5,8 +5,10 @@ import Poker.Models.Players.Bot;
 import Poker.Models.Players.IPlayer;
 import Poker.Models.Players.Player;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -75,8 +77,15 @@ public class Table {
         {
             Player player = players.get(current);
             if (!player.isFold()) {
-                player.makeMove();
+                try {
+                    player.makeMove(getMaxBet(), bigBlind);
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    System.exit(-1488);
+                }
             }
+
+            current = nextPlayer(current);
         }
 
     }
@@ -91,6 +100,17 @@ public class Table {
         }
 
         return current;
+    }
+
+    private int getMaxBet(){
+        int max = bigBlind;
+        for (int bet: bets) {
+            if (bet > max){
+                max = bet;
+            }
+        }
+
+        return max;
     }
 
     private void setDealerId(){
