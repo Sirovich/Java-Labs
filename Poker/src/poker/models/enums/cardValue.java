@@ -1,6 +1,6 @@
-package Poker.Models.Enums;
+package poker.models.enums;
 
-public enum CardValue {
+public enum cardValue {
     Two(2),
     Three(3),
     Four(4),
@@ -17,7 +17,7 @@ public enum CardValue {
 
     private final int cardValue;
 
-    CardValue(final int cardValue) {
+    cardValue(final int cardValue) {
         this.cardValue = cardValue;
     }
 

@@ -1,24 +1,21 @@
-package Poker.Models.Cards;
-
-import javafx.fxml.FXML;
-import javafx.scene.layout.HBox;
+package poker.models.cards;
 
 import java.util.ArrayList;
 
-public class Hand {
-    private ArrayList<Card> cards;
+public class hand {
+    private ArrayList<card> cards;
 
-    public Hand(){
-        this.cards = new ArrayList<Card>();
+    public hand(){
+        this.cards = new ArrayList<card>();
     }
 
-    public Hand(Card first, Card second) {
+    public hand(card first, card second) {
         this.cards = new ArrayList<>();
         cards.add(first);
         cards.add(second);
     }
 
-    public void AddCard(Card card){
+    public void addCard(card card){
         if (card == null){
             throw new NullPointerException();
         }

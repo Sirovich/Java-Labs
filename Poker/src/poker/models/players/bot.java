@@ -1,10 +1,8 @@
-package Poker.Models.Players;
+package poker.models.players;
 
-import Poker.Models.Cards.Hand;
-
-public class Bot extends Player{
+public class bot extends player {
     @Override
-    public void setHand(Hand hand) {
+    public void setHand(poker.models.cards.hand hand) {
 
     }
 

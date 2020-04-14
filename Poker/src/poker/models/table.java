@@ -1,19 +1,17 @@
-package Poker.Models;
+package poker.models;
 
-import Poker.Models.Cards.Deck;
-import Poker.Models.Players.Bot;
-import Poker.Models.Players.IPlayer;
-import Poker.Models.Players.Player;
+import poker.models.cards.deck;
+import poker.models.players.bot;
+import poker.models.players.player;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Table {
-    private ArrayList<Player> players;
+public class table {
+    private ArrayList<player> players;
     private ArrayList<Integer> bets;
 
     @FXML
@@ -27,23 +25,23 @@ public class Table {
     private int activePlayers;
 
 
-    private Deck deck;
+    private poker.models.cards.deck deck;
     private int dealerId;
 
-    public Table(){
-        players = new ArrayList<Player>();
+    public table(){
+        players = new ArrayList<player>();
         bets = new ArrayList<Integer>();
-        deck = new Deck();
+        deck = new deck();
     }
 
     public void setPlayers(int playersCount, int botCount){
         for(int i = 0; i < playersCount; i++){
-            players.add(new Player());
+            players.add(new player());
             bets.add(0);
         }
 
         for(int i = 0; i < botCount; i++){
-            players.add(new Bot());
+            players.add(new bot());
             bets.add(0);
         }
 
@@ -55,8 +53,8 @@ public class Table {
 
     public void dealCards(){
         this.setDealerId();
-        this.deck.Shuffle();
-        for (Player player: players) {
+        this.deck.shuffle();
+        for (poker.models.players.player player: players) {
             player.setHand(deck.getCardsHand());
         }
     }
@@ -75,7 +73,7 @@ public class Table {
 
         while (activePlayers > 1)
         {
-            Player player = players.get(current);
+            player player = players.get(current);
             if (!player.isFold()) {
                 try {
                     player.makeMove(getMaxBet(), bigBlind);

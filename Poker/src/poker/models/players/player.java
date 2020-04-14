@@ -1,31 +1,26 @@
-package Poker.Models.Players;
+package poker.models.players;
 
-import Poker.Models.Cards.Hand;
-import javafx.fxml.FXML;
+import poker.models.cards.hand;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
-import java.io.Console;
 import java.io.IOException;
 
-public class Player{
-    private Hand hand;
+public class player {
+    private poker.models.cards.hand hand;
     private int money;
     private int bet;
     private boolean isFold = false;
     private boolean isDealer;
 
-    public Player(){
+    public player(){
         money = 2500;
-        this.hand = new Hand();
+        this.hand = new hand();
         isDealer = false;
     }
 
-    public void setHand(Hand hand) {
+    public void setHand(poker.models.cards.hand hand) {
         this.hand = hand;
     }
 
@@ -39,7 +34,7 @@ public class Player{
 
     public void makeMove(int betSize, int bigBlind) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Poker/Main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/poker/main.fxml"));
         Parent root = loader.load();
 
         Button bet = (Button)loader.getNamespace().get("bet");

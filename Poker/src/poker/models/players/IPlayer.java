@@ -1,10 +1,10 @@
-package Poker.Models.Players;
+package poker.models.players;
 
-import Poker.Models.Cards.Hand;
+import poker.models.cards.hand;
 
 public interface IPlayer {
 
-    void setHand(Hand hand);
+    void setHand(hand hand);
 
     boolean isFold();
 
