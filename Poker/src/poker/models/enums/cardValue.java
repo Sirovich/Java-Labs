@@ -1,6 +1,6 @@
 package poker.models.enums;
 
-public enum cardValue {
+public enum CardValue {
     Two(2),
     Three(3),
     Four(4),
@@ -17,7 +17,7 @@ public enum cardValue {
 
     private final int cardValue;
 
-    cardValue(final int cardValue) {
+    CardValue(final int cardValue) {
         this.cardValue = cardValue;
     }
 
@@ -25,4 +25,7 @@ public enum cardValue {
         return this.cardValue;
     }
 
+    public String displayName() {
+        return ordinal() < 9 ? String.valueOf(cardValue) : name().substring(0, 1);
+    }
 }

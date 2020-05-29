@@ -1,29 +1,36 @@
 package poker.models.cards;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+
 import java.util.ArrayList;
 
-public class hand {
-    private ArrayList<card> cards;
+public class Hand {
+    private ArrayList<Card> cards;
 
-    public hand(){
-        this.cards = new ArrayList<card>();
-    }
-
-    public hand(card first, card second) {
-        this.cards = new ArrayList<>();
+    public Hand(Card first, Card second) {
+        cards = new ArrayList<Card>();
         cards.add(first);
         cards.add(second);
     }
 
-    public void addCard(card card){
+    public void addCard(Card card){
         if (card == null){
             throw new NullPointerException();
         }
 
-        this.cards.add(card);
+        cards.add(card);
     }
 
     public void clearHand(){
         cards.clear();
+    }
+
+    public Card getFirstCard(){
+        return cards.get(0);
+    }
+
+    public Card getSecondCard(){
+        return cards.get(1);
     }
 }

@@ -1,17 +1,22 @@
 package poker.models.cards;
 
-import poker.models.enums.cardSuit;
-import poker.models.enums.cardValue;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.Node;
+import poker.models.enums.CardSuit;
+import poker.models.enums.CardValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class deck {
-    private ArrayList<card> cards;
+public class Deck {
+    private ArrayList<Card> cards;
 
-    public deck(){
-        cards = new ArrayList<card>();
+    public Deck(){
+        cards = new ArrayList<Card>();
         this.fillDeck();
     }
 
@@ -19,31 +24,39 @@ public class deck {
         Collections.shuffle(cards);
     }
 
-    public hand getCardsHand(){
+    public Card getRandomCard(){
+        Random random = new Random();
+        int cardIndex = random.nextInt(cards.size());
+        Card card = cards.get(cardIndex);
+        cards.remove(cardIndex);
+        return card;
+    }
+
+    public Hand getCardsHand(){
         Random random = new Random();
 
         int firstCardIndex = random.nextInt(cards.size());
-        card firstCard = this.cards.get(firstCardIndex);
+        Card firstCard = this.cards.get(firstCardIndex);
         this.cards.remove(firstCardIndex);
 
         int secondCardIndex = random.nextInt(cards.size());
-        card secondCard = this.cards.get(secondCardIndex);
+        Card secondCard = this.cards.get(secondCardIndex);
         cards.remove(secondCardIndex);
-
-        return new hand(firstCard, secondCard);
+        Hand hand = new Hand(firstCard, secondCard);
+        return hand;
     }
 
     private void fillDeck(){
-        this.cards.clear(); //SRP
-        for(cardSuit suit: cardSuit.values()){
-            for(cardValue value: cardValue.values()){
+        this.cards.clear();
+        for(CardSuit suit: CardSuit.values()){
+            for(CardValue value: CardValue.values()){
                 this.addCard(suit, value);
             }
         }
     }
 
-    private void addCard(cardSuit suit, cardValue value){
-        card card = new card(suit, value);
+    private void addCard(CardSuit suit, CardValue value){
+        Card card = new Card(suit, value);
         cards.add(card);
     }
 }

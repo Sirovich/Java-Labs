@@ -1,16 +1,17 @@
 package poker;
 
-import poker.logic.games.gameController;
+import poker.logic.games.GameController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import poker.models.Table;
 
-public class main extends Application {
-    private gameController game;
+public class Main extends Application {
+    private GameController game;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        game = new gameController();
-        game.showMainMenu(primaryStage);
+        Table table = new Table();
+        table.setUp();
     }
 
 

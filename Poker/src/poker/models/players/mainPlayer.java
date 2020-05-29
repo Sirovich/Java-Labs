@@ -1,5 +1,5 @@
 package poker.models.players;
 
-public class mainPlayer extends player {
+public class mainPlayer extends Player {
 
 }

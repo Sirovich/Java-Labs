@@ -4,30 +4,41 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poker.models.table">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poker.models.Table">
    <children>
-      <ImageView fitHeight="466.0" fitWidth="640.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="443.0" fitWidth="666.0" layoutX="22.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
           <image>
               <Image backgroundLoading="true" url="@../Resources/Images/table.png" />
           </image>
       </ImageView>
-      <HBox layoutX="116.0" layoutY="140.0" prefHeight="100.0" prefWidth="436.0" />
-      <HBox fx:id="playerHand" layoutX="270.0" layoutY="325.0" prefHeight="100.0" prefWidth="114.0" />
-      <HBox layoutX="22.0" layoutY="190.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox layoutX="91.0" layoutY="289.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox layoutX="126.0" layoutY="44.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox layoutX="300.0" layoutY="14.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox layoutX="442.0" layoutY="14.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox layoutX="584.0" layoutY="147.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox layoutX="518.0" layoutY="276.0" prefHeight="86.0" prefWidth="69.0" />
-      <AnchorPane fx:id="playerBetMenu" layoutX="399.0" layoutY="375.0" prefHeight="119.0" prefWidth="331.0">
+      <HBox fx:id="tableField" layoutX="180.0" layoutY="140.0" prefHeight="100.0" prefWidth="395.0" />
+      <HBox fx:id="playerHand" layoutX="270.0" layoutY="325.0" prefHeight="119.0" prefWidth="114.0" />
+      <HBox fx:id="hand2" layoutX="14.0" layoutY="147.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand1" layoutX="104.0" layoutY="289.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand3" layoutX="80.0" layoutY="15.0" prefHeight="100.0" prefWidth="88.0" />
+      <HBox fx:id="hand4" layoutX="283.0" layoutY="4.0" prefHeight="86.0" prefWidth="88.0" />
+      <HBox fx:id="hand5" layoutX="483.0" layoutY="22.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand6" layoutX="584.0" layoutY="160.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand7" layoutX="496.0" layoutY="265.0" prefHeight="86.0" prefWidth="69.0" />
+      <AnchorPane fx:id="playerBetMenu" layoutX="432.0" layoutY="427.0" prefHeight="119.0" prefWidth="331.0">
          <children>
-            <Button fx:id="fold" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Fold" />
-            <Button fx:id="call" layoutX="90.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Call" />
-            <Button fx:id="bet" layoutX="166.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Bet" />
-            <Slider layoutX="131.0" layoutY="72.0" prefHeight="14.0" prefWidth="166.0" />
-            <TextField layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="88.0" />
-            <Button fx:id="allIn" layoutX="248.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="All in" />
+            <Button fx:id="foldButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Fold" />
+            <Button fx:id="callButton" layoutX="90.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Call" />
+            <Button fx:id="betButton" layoutX="166.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Bet" />
+            <Slider fx:id="betSlider" layoutX="131.0" layoutY="72.0" prefHeight="14.0" prefWidth="166.0" />
+            <TextField fx:id="betValue" editable="false" layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="88.0" />
+            <Button fx:id="allInButton" layoutX="248.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="All in" />
          </children></AnchorPane>
+      <Button fx:id="startButton" layoutX="690.0" layoutY="395.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Start" />
+      <Label fx:id="bet0" layoutX="315.0" layoutY="455.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet1" layoutX="112.0" layoutY="387.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet2" layoutX="15.0" layoutY="246.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet3" layoutX="90.0" layoutY="115.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet4" layoutX="302.0" layoutY="100.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet5" layoutX="483.0" layoutY="124.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet6" layoutX="584.0" layoutY="257.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="bet7" layoutX="496.0" layoutY="367.0" prefHeight="17.0" prefWidth="69.0" />
+      <Label fx:id="time" layoutX="75.0" layoutY="498.0" prefHeight="48.0" prefWidth="227.0" />
+      <Label fx:id="timer" layoutX="189.0" layoutY="498.0" prefHeight="42.0" prefWidth="125.0" />
    </children>
 </AnchorPane>

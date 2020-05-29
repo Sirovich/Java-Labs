@@ -1,33 +1,58 @@
 package poker.logic.games;
 
-import poker.models.table;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.WindowEvent;
+import poker.models.Table;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import poker.models.players.Player;
 
-public class gameController {
-    private poker.models.table table;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+public class GameController {
+    private Table table;
+
     @FXML
-    private AnchorPane menuPane;
+    private Button startButton;
 
-    public gameController(){
-        table = new table();
+    public GameController(){
+        table = new Table();
     }
 
     public void setUpGame() throws Exception {
-        Stage stage = (Stage)menuPane.getScene().getWindow();
-        stage.close();
-        Stage newStage = new Stage();
-        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/poker/main.fxml"));
-        newStage.setTitle("PokerDocker");
-        newStage.setScene(new Scene(root, 800, 500));
-        newStage.show();
+            Stage newStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/poker/main.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            table.setPlayers(1, 7);
+            table.dealCards();
+            //table.drawHands();
+            startButton = (Button)loader.getNamespace().get("startButton");
+            startButton.setOnAction(event->
+            {
+               // startGame();
+            });
+            newStage.setTitle("PokerDocker");
+            newStage.setScene(new Scene(root, 800, 500));
+            newStage.show();
     }
 
-    public void startGame(){
+    public void startGame(Stage newStage){
         Runnable task = () -> {
             table.setPlayers(1, 7);
             table.dealCards();
@@ -48,14 +73,12 @@ public class gameController {
     @FXML
     public void setUpDuel() throws Exception{
         this.setUpGame();
-
-        startGame();
     }
 
     @FXML
     public void setUpDefault() throws Exception{
         this.setUpGame();
 
-        startGame();
+        //startGame();
     }
 }

@@ -1,50 +1,70 @@
 package poker.models.players;
 
-import poker.models.cards.hand;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+import poker.models.cards.Hand;
+import poker.models.enums.GameStage;
 
 import java.io.IOException;
+import java.util.TimerTask;
 
-public class player {
-    private poker.models.cards.hand hand;
+public class Player {
+    private Hand hand;
     private int money;
     private int bet;
+    private boolean isEndTurn = false;
     private boolean isFold = false;
     private boolean isDealer;
+    private int[] time = {30};
+    private Timeline timeline;
 
-    public player(){
+    public Player(){
         money = 2500;
-        this.hand = new hand();
         isDealer = false;
     }
 
-    public void setHand(poker.models.cards.hand hand) {
+    public void setHand(Hand hand) {
         this.hand = hand;
+    }
+
+    public Hand getHand(){
+        return hand;
     }
 
     public boolean isFold() {
         return this.isFold;
     }
 
+    public void setEndTurn(Boolean state){
+        isEndTurn = state;
+    }
+
+    public boolean isEndTurn() {
+        return isEndTurn;
+    }
+
     public void setFold() {
         isFold = true;
+        bet = 0;
     }
 
-    public void makeMove(int betSize, int bigBlind) throws IOException {
+    public void makeMove(int betSize, int bigBlind, GameStage stage) {
+        System.out.println("Players turn");
+        startTimer();
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/poker/main.fxml"));
-        Parent root = loader.load();
-
-        Button bet = (Button)loader.getNamespace().get("bet");
-        Button fold = (Button)loader.getNamespace().get("fold");
-        Button call = (Button)loader.getNamespace().get("call");
-        Button allIn = (Button)loader.getNamespace().get("allIn");
-
+    private void startTimer(){
 
     }
 
+    private void stopTimer(){
+
+        isEndTurn = false;
+    }
 
     public int getMoney() {
         return this.money;

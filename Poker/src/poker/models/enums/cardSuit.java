@@ -1,14 +1,17 @@
 package poker.models.enums;
 
-public enum cardSuit {
-    Hearts(1),
+import javafx.scene.image.Image;
+
+import java.io.File;
+
+public enum CardSuit {
+    Clubs(1),
     Spades(2),
-    Clubs(3),
+    Hearts(3),
     Diamonds(4);
 
     private final int suitValue;
-
-    cardSuit(final int suitValue) {
+    CardSuit(final int suitValue) {
         this.suitValue = suitValue;
     }
 
