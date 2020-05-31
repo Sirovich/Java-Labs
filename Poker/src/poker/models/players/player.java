@@ -1,18 +1,11 @@
 package poker.models.players;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
 import poker.models.cards.Card;
 import poker.models.cards.Hand;
 import poker.models.enums.GameStage;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.TimerTask;
 
 public class Player {
     private Hand hand;

@@ -1,9 +1,5 @@
 package poker.models.enums;
 
-import javafx.scene.image.Image;
-
-import java.io.File;
-
 public enum CardSuit {
     Clubs(1),
     Spades(2),

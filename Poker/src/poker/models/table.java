@@ -38,8 +38,8 @@ import java.util.Random;
 import static poker.models.enums.GameStage.flop;
 
 public class Table {
-    private ArrayList<Player> players; // List interface
-    private ArrayList<Integer> bets; // List interface
+    private ArrayList<Player> players;
+    private ArrayList<Integer> bets;
     private ArrayList<Card> tableCards;
     @FXML
     private HBox playerHand;
@@ -59,7 +59,7 @@ public class Table {
     private Button startButton;
     private boolean isEndOfLap;
 
-    public Table(){ //add List constructor injection
+    public Table(){
         players = new ArrayList<Player>();
         bets = new ArrayList<Integer>();
         tableCards = new ArrayList<Card>();
