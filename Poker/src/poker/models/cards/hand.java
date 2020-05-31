@@ -22,6 +22,10 @@ public class Hand {
         cards.add(card);
     }
 
+    public ArrayList<Card> getCards(){
+        return cards;
+    }
+
     public void clearHand(){
         cards.clear();
     }

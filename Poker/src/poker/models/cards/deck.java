@@ -10,6 +10,7 @@ import poker.models.enums.CardValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Deck {
@@ -32,6 +33,24 @@ public class Deck {
         return card;
     }
 
+    public void removeCard(Card card) {
+         cards.remove(card);
+    }
+
+    public List<List<Card>> fromDeckToCouplesOfCard(){
+        List<List<Card>> couplesOfCard = new ArrayList<List<Card>>();
+        int i,j;
+        for(i = 0; i < this.cards.size(); i++){
+            for (j = i+1; j < this.cards.size(); j++){
+                List<Card> tmpCards = new ArrayList<Card>();
+                tmpCards.add(this.cards.get(i));
+                tmpCards.add(this.cards.get(j));
+                couplesOfCard.add(tmpCards);
+            }
+        }
+        return couplesOfCard;
+    }
+
     public Hand getCardsHand(){
         Random random = new Random();
 
@@ -46,7 +65,7 @@ public class Deck {
         return hand;
     }
 
-    private void fillDeck(){
+    public void fillDeck(){
         this.cards.clear();
         for(CardSuit suit: CardSuit.values()){
             for(CardValue value: CardValue.values()){

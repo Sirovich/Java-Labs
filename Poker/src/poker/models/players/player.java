@@ -6,10 +6,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+import poker.models.cards.Card;
 import poker.models.cards.Hand;
 import poker.models.enums.GameStage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.TimerTask;
 
 public class Player {
@@ -52,18 +54,12 @@ public class Player {
         bet = 0;
     }
 
-    public void makeMove(int betSize, int bigBlind, GameStage stage) {
+    public void setActive(){
+        isFold = false;
+    }
+
+    public void makeMove(int bet, GameStage stage, List<Card> boardCards, int activePlayers){
         System.out.println("Players turn");
-        startTimer();
-    }
-
-    private void startTimer(){
-
-    }
-
-    private void stopTimer(){
-
-        isEndTurn = false;
     }
 
     public int getMoney() {
@@ -73,6 +69,10 @@ public class Player {
     public void placeBet(int betSize) {
         money -= betSize;
         bet += betSize;
+    }
+
+    public void addMoney(int size){
+        money += size;
     }
 
     public int getBet() {

@@ -12,13 +12,34 @@ import poker.models.enums.CardValue;
 
 import java.io.File;
 
-public class Card {
+public class Card implements Comparable<Card> {
     private CardValue value;
     private CardSuit suit;
 
     public Card(CardSuit suit, CardValue value){
         this.suit = suit;
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return suit.toString() + value.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Card)) {
+            return false;
+        }
+
+        Card other = (Card) obj;
+
+        return suit.equals(other.suit) && value.equals(other.value);
+    }
+
+
+    public int compareTo(Card card) {
+        return value.getCardValue() - card.value.getCardValue();
     }
 
     public CardSuit getSuit() {

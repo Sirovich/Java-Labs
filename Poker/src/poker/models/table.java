@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import poker.models.cards.Card;
 import poker.models.cards.Deck;
+import poker.models.cards.HandPower;
+import poker.models.cards.HandPowerRanker;
 import poker.models.enums.GameStage;
 import poker.models.players.Bot;
 import poker.models.players.Player;
@@ -43,23 +45,26 @@ public class Table {
     private HBox playerHand;
 
     private final static int smallBlind = 100;
-    private int bigBlind = 200;
-    private int pot = 0;
+    private final static int bigBlind = 200;
     private GameStage currentStage = flop;
-    private int stage = 0;
     private int activePlayers;
     private int current;
     private Deck deck;
     private int dealerId;
     private Timeline timeline;
     private FXMLLoader loader;
-    private boolean isEndTurn = false;
+    private boolean isEndTurn = true;
+    private int lastTurnPlayerId;
+    private HandPowerRanker handPowerRanker;
+    private Button startButton;
+    private boolean isEndOfLap;
 
     public Table(){ //add List constructor injection
         players = new ArrayList<Player>();
         bets = new ArrayList<Integer>();
         tableCards = new ArrayList<Card>();
         deck = new Deck();
+        handPowerRanker = new HandPowerRanker();
     }
 
     public void setPlayers(int playersCount, int botCount){
@@ -76,7 +81,16 @@ public class Table {
         Random random = new Random();
         dealerId = random.nextInt(players.size());
         current = dealerId;
-        current = nextPlayer();
+        current = getNextPlayerId(current);
+        players.get(current).placeBet(smallBlind);
+        bets.set(current, smallBlind);
+        drawBet();
+        current = getNextPlayerId(current);
+        lastTurnPlayerId = current;
+        players.get(current).placeBet(bigBlind);
+        bets.set(current, bigBlind);
+        drawBet();
+        current = getNextPlayerId(current);
         activePlayers = players.size();
     }
 
@@ -87,7 +101,7 @@ public class Table {
         }
     }
 
-    public void drawHands(FXMLLoader loader){
+    public void drawHands(){
         for(int i = 0; i < players.size(); i++)
         {
             if (players.get(i).getClass().getTypeName().equals(Player.class.getName())) {
@@ -98,6 +112,7 @@ public class Table {
                 Image image = new Image(file.toURI().toString(), 60, 160, true, true);
                 ImageView view = new ImageView(image);
                 HBox box = (HBox)loader.getNamespace().get("playerHand");
+                box.getChildren().clear();
                 box.getChildren().add(view);
 
                 cardNumber = (secondCard.getSuit().getSuitValue() -1) * 13 + secondCard.getValue().getCardValue() - 1;
@@ -111,10 +126,18 @@ public class Table {
                 Image image = new Image(file.toURI().toString(), 60, 160, true, true);
                 ImageView view = new ImageView(image);
                 HBox box = (HBox)loader.getNamespace().get("hand"+i);
+                box.getChildren().clear();
                 box.getChildren().addAll(view, new ImageView(image));
             }
         }
 
+    }
+
+    private void drawMoney(){
+        for(int i = 0; i < players.size(); i++){
+            Label label = (Label)loader.getNamespace().get("money"+i);
+            label.setText(players.get(i).getMoney()+"$");
+        }
     }
 
     public void setUp(){
@@ -128,8 +151,9 @@ public class Table {
         }
         setPlayers(1, 7);
         dealCards();
-        drawHands(loader);
-        Button startButton = (Button)loader.getNamespace().get("startButton");
+        drawHands();
+        drawMoney();
+        startButton = (Button)loader.getNamespace().get("startButton");
 
         Runnable task = () -> {
             while(true) {
@@ -161,7 +185,14 @@ public class Table {
                             Platform.runLater(() -> {
                                 executeStage();
                                 if (current != 0) {
-                                    drawBet(loader);
+                                    if (!players.get(current).isFold()) {
+                                        drawBet();
+                                    } else {
+                                        drawFold();
+                                    }
+                                }
+                                if (current != 0) {
+                                    current = getNextPlayerId(current);
                                     isEndTurn = true;
                                 }
                             });
@@ -179,21 +210,32 @@ public class Table {
         setUpUserPanel(loader);
 
         newStage.setTitle("PokerDocker");
-        newStage.setScene(new Scene(root, 777, 568));
+        newStage.setScene(new Scene(root, 853, 664));
         newStage.setOnCloseRequest(windowEvent -> {
             thread.interrupt();
         });
         newStage.show();
     }
 
+    private void lockUserPanel(boolean state){
+        Button foldButton = (Button)loader.getNamespace().get("foldButton");
+        Button betButton = (Button)loader.getNamespace().get("betButton");
+        Button callButton = (Button)loader.getNamespace().get("callButton");
+        Button allInButton = (Button)loader.getNamespace().get("allInButton");
+
+        foldButton.setDisable(state);
+        betButton.setDisable(state);
+        callButton.setDisable(state);
+        allInButton.setDisable(state);
+    }
+
     private void executeStage(){
+        calculateActivePlayersAmount();
         if (activePlayers > 1) {
-            if (getNextPlayerId(dealerId) == getPreviousPlayerId(current)) {
-                for (int i = 0; i < bets.size(); i++)
-                {
-                    System.out.println(bets.get(i).intValue());
-                }
+            if (getPreviousPlayerId(current) == lastTurnPlayerId && isEndOfLap) {
                 if (isAllBetsEqual()){
+                    current = getPreviousPlayerId(current);
+                    isEndOfLap = false;
                     switch (currentStage){
                         case flop: {
                             dealTableCards(3);
@@ -211,9 +253,12 @@ public class Table {
                             break;
                         }
                         case end:{
-                            //getWinner();
+                            getWinner();
                             break;
                         }
+                    }
+                    if (current == 0){
+                        isEndTurn = true;
                     }
                 }
                 else{
@@ -225,6 +270,105 @@ public class Table {
                 nextTurn();
             }
         }
+        else{
+            int pot = getTotalPot();
+            for (int i = 0; i < players.size(); i++){
+                if (!players.get(i).isFold()){
+                    System.out.println("Stay solo:" + i);
+                    players.get(i).addMoney(pot);
+                    break;
+                }
+            }
+            startNewRound();
+        }
+    }
+
+    private void calculateActivePlayersAmount() {
+        int active = 0;
+        for(int i = 0; i < players.size(); i++){
+            if (!players.get(i).isFold()){
+                active++;
+            }
+        }
+        activePlayers = active;
+    }
+
+    private void getWinner() {
+        int winnerId = -1;
+        HandPower maxPower = null;
+        for(int i = 0; i < players.size(); i++){
+            if (!players.get(i).isFold()){
+                ArrayList<Card> cards =  new ArrayList<Card>(tableCards);
+                cards.addAll(players.get(i).getHand().getCards());
+                HandPower power = handPowerRanker.rank(cards);
+                if (winnerId == -1){
+                    maxPower = power;
+                    winnerId = i;
+                    continue;
+                }
+                if (power.compareTo(maxPower) > 0){
+                    winnerId = i;
+                    maxPower = power;
+                }
+            }
+        }
+
+        players.get(winnerId).addMoney(getTotalPot());
+        System.out.println("Player win: "+winnerId);
+        startNewRound();
+    }
+
+    private void removeTableCards(){
+        HBox tabelField = (HBox)loader.getNamespace().get("tableField");
+        tabelField.getChildren().clear();
+    }
+
+    private void removeBets(){
+        for(int i = 0; i < players.size(); i++){
+            Label betLabel = (Label) loader.getNamespace().get("bet" + i);
+            Integer bet = bets.get(i);
+            betLabel.setText(bet.toString());
+        }
+    }
+
+    private void startNewRound(){
+        deck.fillDeck();
+        deck.shuffle();
+        for(int i = 0; i < players.size(); i++){
+            bets.set(i, 0);
+            players.get(i).setHand(deck.getCardsHand());
+            players.get(i).setFold();
+            players.get(i).setActive();
+        }
+
+        drawHands();
+        drawMoney();
+        removeTableCards();
+        removeBets();
+        currentStage = flop;
+        isEndOfLap = true;
+        dealerId = getNextPlayerId(dealerId);
+        current = dealerId;
+        current = getNextPlayerId(current);
+        players.get(current).placeBet(smallBlind);
+        bets.set(current, smallBlind);
+        drawBet();
+        current = getNextPlayerId(current);
+        lastTurnPlayerId = current;
+        players.get(current).placeBet(bigBlind);
+        bets.set(current, bigBlind);
+        drawBet();
+        activePlayers = players.size();
+    }
+
+    private int getTotalPot(){
+        int pot = 0;
+        int playerId = 0;
+        for (int i = 0; i < players.size(); i++){
+            pot += bets.get(i).intValue();
+        }
+
+        return pot;
     }
 
     private void dealTableCards(int count){
@@ -237,8 +381,8 @@ public class Table {
 
     private void drawTableCard(Card card){
         HBox tabelField = (HBox)loader.getNamespace().get("tableField");
-        int cardNumber = (card.getSuit().getSuitValue() -1) * 13 + card.getValue().getCardValue();
-        File file = new File("E:/projects/Проекты 2019-2020/IdeaProjects/Poker/src/Resources/Images/" + cardNumber + ".png");
+        int cardNumber = (card.getSuit().getSuitValue() -1) * 13 + card.getValue().getCardValue() - 1;
+        File file = new File("src/Resources/Images/" + cardNumber + ".png");
         Image image = new Image(file.toURI().toString(), 60, 160, true, true);
         ImageView view = new ImageView(image);
         tabelField.getChildren().add(view);
@@ -259,12 +403,19 @@ public class Table {
         return true;
     }
 
-    private void drawBet(FXMLLoader loader){
-        System.out.println("Player: "+current);
+    private void drawBet(){
         Label betLabel = (Label) loader.getNamespace().get("bet" + current);
-        Integer bet = players.get(current).getBet();
+        Label moneyLabel = (Label) loader.getNamespace().get("money" + current);
+
+        Integer bet = bets.get(current);
+        moneyLabel.setText(players.get(current).getMoney()+"$");
         betLabel.setText(bet.toString());
-        current = nextPlayer();
+    }
+
+    private void drawFold(){
+        Label betLabel = (Label) loader.getNamespace().get("bet" + current);
+        Integer bet = bets.get(current);
+        betLabel.setText(bet.toString() + " Fold");
     }
 
     private void setUpUserPanel(FXMLLoader loader){
@@ -291,25 +442,24 @@ public class Table {
             int bet = players.get(0).getMoney();
             players.get(0).placeBet(bet);
             bets.set(0, players.get(0).getBet());
-            System.out.println("all in");
             players.get(0).setEndTurn(true);
-            drawBet(loader);
+            drawBet();
+            current = getNextPlayerId(current);
         });
 
         callButton.setOnAction(event -> {
             players.get(0).placeBet(getMaxBet() - bets.get(0));
             bets.set(0, players.get(0).getBet());
-            System.out.println("call");
             players.get(0).setEndTurn(true);
-            drawBet(loader);
+            drawBet();
+            current = getNextPlayerId(current);
         });
 
         foldButton.setOnAction(event -> {
             players.get(0).setFold();
-            bets.set(0, players.get(0).getBet());
-            System.out.println("fold");
             players.get(0).setEndTurn(true);
-            drawBet(loader);
+            drawBet();
+            current = getNextPlayerId(current);
         });
 
         betButton.setOnAction(event -> {
@@ -322,45 +472,33 @@ public class Table {
             }
             players.get(0).placeBet(value);
             bets.set(0, bets.get(0) + value);
-            System.out.println("bet");
             players.get(0).setEndTurn(true);
             betSlider.setValue(0);
-            drawBet(loader);
+            drawBet();
+            current = getNextPlayerId(current);
         });
     }
 
-    public void startGame() {
-        int current = dealerId;
-
-        bets.set(current, bigBlind);
-        players.get(current).placeBet(bigBlind);
-        current = nextPlayer();
-
-        players.get(current).placeBet(smallBlind);
-        bets.set(current, smallBlind);
-        current = nextPlayer();
-
-        while (activePlayers > 1)
-        {
-            Player player = players.get(current);
-            if (!player.isFold()) {
-                player.makeMove(getMaxBet(), bigBlind,currentStage);
-            }
-
-            current = nextPlayer();
-        }
-
-    }
-
     private void nextTurn(){
+        isEndOfLap = true;
         if (!players.get(current).isFold()) {
             if (current != 0) {
-                players.get(current).makeMove(getMaxBet(), bigBlind, currentStage);
-                bets.set(current, players.get(current).getBet());
+                players.get(current).makeMove(getMaxBet(), currentStage, tableCards, activePlayers);
+                if (!players.get(current).isFold()) {
+                    bets.set(current, players.get(current).getBet());
+                }
+                else if (current == lastTurnPlayerId){
+                    int id = getNextPlayerId(lastTurnPlayerId);
+                    while (players.get(id).isFold()){
+                        id = getNextPlayerId(id);
+                    }
+                    lastTurnPlayerId = id;
+                    System.out.println("Last turn player: "+ id);
+                }
             }
             else{
                 int[] time = {30};
-
+                lockUserPanel(false);
                 Runnable task = () -> {
                     timeline = new Timeline(
                             new KeyFrame(
@@ -372,17 +510,18 @@ public class Table {
                                                 Integer value = time[0];
                                                 betLabel.setText(value.toString());
                                             });
-                                            System.out.println(time[0]);
                                             time[0] -= 1;
                                         }
                                         else{
-                                            System.out.println("User pressed button");
                                             stopTimer();
                                         }
                                     }
                             )
                     );
                     timeline.setOnFinished(event ->{
+                        players.get(0).setFold();
+                        drawBet();
+                        current = getNextPlayerId(current);
                         stopTimer();
                     });
                     timeline.setCycleCount(30);
@@ -393,24 +532,17 @@ public class Table {
                 thread.start();
             }
         }
+        else if (current == 0){
+            current = getNextPlayerId(current);
+            isEndTurn = true;
+        }
     }
 
     private void stopTimer(){
         players.get(0).setEndTurn(false);
         timeline.stop();
+        lockUserPanel(true);
         isEndTurn = true;
-    }
-
-    private int nextPlayer(){
-        if (current == players.size() - 1){
-            current = 0;
-        }
-        else
-        {
-            current++;
-        }
-
-        return current;
     }
 
     private int getPreviousPlayerId(int id){
@@ -443,14 +575,5 @@ public class Table {
         }
 
         return max;
-    }
-
-    private void setDealerId(){
-        if (dealerId == players.size()) {
-            dealerId = 0;
-        }
-        else {
-            dealerId++;
-        }
     }
 }

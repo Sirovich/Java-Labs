@@ -3,24 +3,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poker.models.Table">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poker.models.Table">
    <children>
-      <ImageView fitHeight="443.0" fitWidth="666.0" layoutX="22.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="574.0" fitWidth="762.0" layoutX="22.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
           <image>
               <Image backgroundLoading="true" url="@../Resources/Images/table.png" />
           </image>
       </ImageView>
-      <HBox fx:id="tableField" layoutX="180.0" layoutY="140.0" prefHeight="100.0" prefWidth="395.0" />
-      <HBox fx:id="playerHand" layoutX="270.0" layoutY="325.0" prefHeight="119.0" prefWidth="114.0" />
-      <HBox fx:id="hand2" layoutX="14.0" layoutY="147.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox fx:id="hand1" layoutX="104.0" layoutY="289.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox fx:id="hand3" layoutX="80.0" layoutY="15.0" prefHeight="100.0" prefWidth="88.0" />
-      <HBox fx:id="hand4" layoutX="283.0" layoutY="4.0" prefHeight="86.0" prefWidth="88.0" />
-      <HBox fx:id="hand5" layoutX="483.0" layoutY="22.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox fx:id="hand6" layoutX="584.0" layoutY="160.0" prefHeight="86.0" prefWidth="69.0" />
-      <HBox fx:id="hand7" layoutX="496.0" layoutY="265.0" prefHeight="86.0" prefWidth="69.0" />
-      <AnchorPane fx:id="playerBetMenu" layoutX="432.0" layoutY="427.0" prefHeight="119.0" prefWidth="331.0">
+      <HBox fx:id="tableField" layoutX="206.0" layoutY="183.0" prefHeight="100.0" prefWidth="395.0" />
+      <HBox fx:id="playerHand" layoutX="346.0" layoutY="404.0" prefHeight="119.0" prefWidth="114.0" />
+      <HBox fx:id="hand2" layoutX="34.0" layoutY="203.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand1" layoutX="134.0" layoutY="361.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand3" layoutX="90.0" layoutY="50.0" prefHeight="100.0" prefWidth="88.0" />
+      <HBox fx:id="hand4" layoutX="302.0" layoutY="22.0" prefHeight="86.0" prefWidth="88.0" />
+      <HBox fx:id="hand5" layoutX="531.0" layoutY="31.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand6" layoutX="709.0" layoutY="169.0" prefHeight="86.0" prefWidth="69.0" />
+      <HBox fx:id="hand7" layoutX="596.0" layoutY="344.0" prefHeight="86.0" prefWidth="69.0" />
+      <AnchorPane fx:id="playerBetMenu" layoutX="499.0" layoutY="522.0" prefHeight="119.0" prefWidth="331.0">
          <children>
             <Button fx:id="foldButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Fold" />
             <Button fx:id="callButton" layoutX="90.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Call" />
@@ -29,16 +30,74 @@
             <TextField fx:id="betValue" editable="false" layoutX="14.0" layoutY="67.0" prefHeight="25.0" prefWidth="88.0" />
             <Button fx:id="allInButton" layoutX="248.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="All in" />
          </children></AnchorPane>
-      <Button fx:id="startButton" layoutX="690.0" layoutY="395.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Start" />
-      <Label fx:id="bet0" layoutX="315.0" layoutY="455.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet1" layoutX="112.0" layoutY="387.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet2" layoutX="15.0" layoutY="246.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet3" layoutX="90.0" layoutY="115.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet4" layoutX="302.0" layoutY="100.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet5" layoutX="483.0" layoutY="124.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet6" layoutX="584.0" layoutY="257.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="bet7" layoutX="496.0" layoutY="367.0" prefHeight="17.0" prefWidth="69.0" />
-      <Label fx:id="time" layoutX="75.0" layoutY="498.0" prefHeight="48.0" prefWidth="227.0" />
-      <Label fx:id="timer" layoutX="189.0" layoutY="498.0" prefHeight="42.0" prefWidth="125.0" />
+      <Button fx:id="startButton" layoutX="750.0" layoutY="486.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Start" />
+      <Label fx:id="bet0" layoutX="384.0" layoutY="515.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet1" layoutX="160.0" layoutY="440.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet2" layoutX="80.0" layoutY="290.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet3" layoutX="130.0" layoutY="135.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet4" layoutX="344.0" layoutY="116.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet5" layoutX="567.0" layoutY="120.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet6" layoutX="758.0" layoutY="255.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="bet7" layoutX="640.0" layoutY="425.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="timer" layoutX="223.0" layoutY="543.0" prefHeight="42.0" prefWidth="125.0" textFill="#ff7c7c">
+         <font>
+            <Font name="Malgun Gothic" size="40.0" />
+         </font></Label>
+      <Label fx:id="money0" layoutX="384.0" layoutY="370.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money1" layoutX="169.0" layoutY="333.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money2" layoutX="80.0" layoutY="178.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money3" layoutX="130.0" layoutY="20.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money4" layoutX="338.0" layoutY="5.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money5" layoutX="561.0" layoutY="5.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money6" layoutX="750.0" layoutY="140.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="money7" layoutX="630.0" layoutY="310.0" prefHeight="17.0" prefWidth="69.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
    </children>
 </AnchorPane>
