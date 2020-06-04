@@ -7,8 +7,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import poker.logics.saves.SaveLogic;
 import poker.models.cards.Card;
 import poker.models.cards.Deck;
 import poker.models.cards.HandPower;
@@ -41,8 +40,6 @@ public class Table {
     private ArrayList<Player> players;
     private ArrayList<Integer> bets;
     private ArrayList<Card> tableCards;
-    @FXML
-    private HBox playerHand;
 
     private final static int smallBlind = 100;
     private final static int bigBlind = 200;
@@ -56,10 +53,16 @@ public class Table {
     private boolean isEndTurn = true;
     private int lastTurnPlayerId;
     private HandPowerRanker handPowerRanker;
-    private Button startButton;
     private boolean isEndOfLap;
+    private SaveLogic saveLogic;
+    private Button starButton;
+    private final String login;
+    private final String password;
 
-    public Table(){
+    public Table(SaveLogic saveLogic, String login, String password){
+        this.login = login;
+        this.password = password;
+        this.saveLogic = saveLogic;
         players = new ArrayList<Player>();
         bets = new ArrayList<Integer>();
         tableCards = new ArrayList<Card>();
@@ -92,6 +95,10 @@ public class Table {
         drawBet();
         current = getNextPlayerId(current);
         activePlayers = players.size();
+    }
+
+    public Player getMainPlayer(){
+        return players.get(0);
     }
 
     public void dealCards(){
@@ -140,7 +147,7 @@ public class Table {
         }
     }
 
-    public void setUp(){
+    public void setUp(int playersMoney){
         Stage newStage = new Stage();
         loader = new FXMLLoader(getClass().getResource("/poker/main.fxml"));
         Parent root = null;
@@ -150,10 +157,11 @@ public class Table {
             e.printStackTrace();
         }
         setPlayers(1, 7);
+        players.get(0).setMoney(playersMoney);
         dealCards();
         drawHands();
         drawMoney();
-        startButton = (Button)loader.getNamespace().get("startButton");
+        starButton = (Button)loader.getNamespace().get("startButton");
 
         Runnable task = () -> {
             while(true) {
@@ -161,21 +169,23 @@ public class Table {
                     try {
                         if (Thread.currentThread().isInterrupted())
                         {
+                            saveLogic.save(players.get(0), login, password);
                             return;
                         }
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
+                        saveLogic.save(players.get(0), login, password);
                         return;
                     }
                 }
                 isEndTurn = false;
-                startButton.fire();
+                starButton.fire();
             }
         };
 
-        startButton.setOnAction(event->
+        starButton.setOnAction(event->
         {
-            startButton.setOpacity(0);
+            starButton.setOpacity(0);
             Service service = new Service() {
                 @Override
                 protected Task createTask() {

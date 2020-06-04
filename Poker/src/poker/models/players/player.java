@@ -38,6 +38,15 @@ public class Player {
         isEndTurn = state;
     }
 
+    public void setMoney(int money){
+        if (money == 0){
+            this.money = 600;
+        }
+        else{
+            this.money = money;
+        }
+    }
+
     public boolean isEndTurn() {
         return isEndTurn;
     }

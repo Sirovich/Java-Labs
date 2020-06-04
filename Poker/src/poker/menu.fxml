@@ -2,12 +2,31 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="menuPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="button2" layoutX="171.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" text="2 players" />
-      <Label layoutX="258.0" layoutY="46.0" prefHeight="17.0" prefWidth="85.0" text="Pocker Docker" />
-      <Button layoutX="171.0" layoutY="293.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" text="8 players" />
+      <Label layoutX="210.0" layoutY="35.0" prefHeight="31.0" prefWidth="182.0" text="Pocker Docker">
+         <font>
+            <Font name="Berlin Sans FB" size="28.0" />
+         </font></Label>
+      <Button fx:id="submitButton" layoutX="171.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" text="Submit" />
+      <PasswordField fx:id="passwordLabel" layoutX="171.0" layoutY="229.0" prefHeight="25.0" prefWidth="259.0" />
+      <TextField fx:id="loginLabel" layoutX="172.0" layoutY="145.0" prefHeight="25.0" prefWidth="259.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="149.0" prefHeight="17.0" prefWidth="88.0" text="Login">
+         <font>
+            <Font name="Berlin Sans FB" size="16.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutX="67.0" layoutY="233.0" prefHeight="17.0" prefWidth="80.0" text="Password">
+         <font>
+            <Font name="Berlin Sans FB" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="188.0" layoutY="280.0" prefHeight="17.0" prefWidth="209.0" textFill="#ab2f2f">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="169.0" layoutY="266.0" prefHeight="44.0" prefWidth="259.0" textFill="#ee2c2c" />
 
    </children>
 </AnchorPane>
